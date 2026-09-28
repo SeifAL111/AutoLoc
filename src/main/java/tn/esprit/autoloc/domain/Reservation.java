@@ -2,18 +2,28 @@ package tn.esprit.autoloc.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "reservation")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idReservation;
-    private LocalDateTime dateDebut;
-    private LocalDateTime dateFin;
+    private LocalDate dateDebut;
+    private LocalDate dateFin;
 
-    @Enumerated(EnumType.STRING)
-    private StatutReservation statut;
+    // Plusieurs réservations appartiennent à un client
+    @ManyToOne
+    @JoinColumn(name = "id_client")
+    private Client client;
+
+    // Plusieurs réservations concernent un véhicule
+    @ManyToOne
+    @JoinColumn(name = "id_vehicule")
+    private Vehicule vehicule;
+
+    // Une réservation donne lieu à un seul contrat
+    @OneToOne(mappedBy = "reservation")
+    private Contrat contrat;
 }

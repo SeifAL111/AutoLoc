@@ -2,11 +2,10 @@ package tn.esprit.autoloc.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-@Table(name = "client")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +14,8 @@ public class Client {
     private String prenom;
     private String email;
     private String telephone;
-    private String numPermis;
-    private LocalDate dateInscription;
+
+    // Un client peut effectuer plusieurs réservations
+    @OneToMany(mappedBy = "client")
+    private List<Reservation> reservations;
 }

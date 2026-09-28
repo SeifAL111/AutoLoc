@@ -2,12 +2,11 @@ package tn.esprit.autoloc.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "vehicule")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -17,23 +16,33 @@ public class Vehicule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idVehicule;
 
-    @Column(nullable = false, unique = true, length = 20)
     private String immatriculation;
-
-    @Column(nullable = false, length = 50)
     private String marque;
-
-    @Column(nullable = false, length = 50)
     private String modele;
+    private Double tarifJournalier;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    private StatutVehicule statut;
+
+    @Enumerated(EnumType.STRING)
     private CategorieVehicule categorie;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal tarifJournalier;
+    // Associations
+    @ManyToOne
+    @JoinColumn(name = "id_agence")
+    private Agence agence;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private StatutVehicule statut;
+    @OneToMany(mappedBy = "vehicule")
+    private List<Reservation> reservations;
+
+    @OneToMany(mappedBy = "vehicule")
+    private List<Maintenance> maintenances;
+
+    @ManyToMany
+    @JoinTable(
+            name = "vehicule_equipement",
+            joinColumns = @JoinColumn(name = "id_vehicule"),
+            inverseJoinColumns = @JoinColumn(name = "id_equipement")
+    )
+    private List<Equipement> equipements;
 }

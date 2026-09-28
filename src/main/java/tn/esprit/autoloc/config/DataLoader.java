@@ -8,8 +8,6 @@ import tn.esprit.autoloc.domain.StatutVehicule;
 import tn.esprit.autoloc.domain.CategorieVehicule;
 import tn.esprit.autoloc.repository.VehiculeRepository;
 
-import java.math.BigDecimal;
-
 @Configuration
 public class DataLoader {
 
@@ -21,7 +19,7 @@ public class DataLoader {
                         .immatriculation("220-TN-1234")
                         .marque("Peugeot")
                         .modele("208")
-                        .tarifJournalier(new BigDecimal("120.00"))
+                        .tarifJournalier(120.00)
                         .statut(StatutVehicule.DISPONIBLE)
                         .categorie(CategorieVehicule.CITADINE)
                         .build();
@@ -30,7 +28,7 @@ public class DataLoader {
                         .immatriculation("230-TN-5678")
                         .marque("Volkswagen")
                         .modele("Golf 8")
-                        .tarifJournalier(new BigDecimal("180.00"))
+                        .tarifJournalier(180.00)
                         .statut(StatutVehicule.DISPONIBLE)
                         .categorie(CategorieVehicule.BERLINE)
                         .build();
