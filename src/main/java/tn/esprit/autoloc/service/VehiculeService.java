@@ -7,19 +7,37 @@ import tn.esprit.autoloc.repository.VehiculeRepository;
 import java.util.List;
 
 @Service
-public class VehiculeService {
+public class VehiculeService implements IVehiculeService {
 
-    private final VehiculeRepository vehiculeRepository;
+    VehiculeRepository vehiculeRepo;
 
-    public VehiculeService(VehiculeRepository vehiculeRepository) {
-        this.vehiculeRepository = vehiculeRepository;
+    @Override
+    public List<Vehicule> retrieveAllVehicules() {
+        return (List<Vehicule>) vehiculeRepo.findAll();
     }
 
-    public List<Vehicule> getAllVehicules() {
-        return vehiculeRepository.findAll();
+    @Override
+    public Vehicule addVehicule(Vehicule v) {
+        return vehiculeRepo.save(v);
     }
 
-    public Vehicule saveVehicule(Vehicule vehicule) {
-        return vehiculeRepository.save(vehicule);
+    @Override
+    public Vehicule updateVehicule(Vehicule v) {
+        return vehiculeRepo.save(v);
+    }
+
+    @Override
+    public Vehicule retrieveVehicule(Long idVehicule) {
+        return vehiculeRepo.findById(idVehicule).orElse(null);
+    }
+
+    @Override
+    public void removeVehicule(Long idVehicule) {
+        vehiculeRepo.deleteById(idVehicule);
+    }
+
+    @Override
+    public List<Vehicule> addVehicules(List<Vehicule> vehicules) {
+        return (List<Vehicule>) vehiculeRepo.saveAll(vehicules);
     }
 }
