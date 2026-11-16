@@ -1,15 +1,18 @@
 package tn.esprit.autoloc.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.autoloc.domain.Reservation;
 import tn.esprit.autoloc.repository.ReservationRepository;
 
 import java.util.List;
+import java.time.LocalDate;
 
 @Service
+@RequiredArgsConstructor
 public class ReservationService implements IReservationService {
 
-    ReservationRepository reservationRepo;
+    private final ReservationRepository reservationRepo;
 
     @Override
     public List<Reservation> retrieveAllReservations() {
@@ -39,5 +42,10 @@ public class ReservationService implements IReservationService {
     @Override
     public List<Reservation> addReservations(List<Reservation> reservations) {
         return (List<Reservation>) reservationRepo.saveAll(reservations);
+    }
+
+    @Override
+    public List<Reservation> getReservationsApresDate(LocalDate date) {
+        return reservationRepo.findByDateDebutAfter(date);
     }
 }

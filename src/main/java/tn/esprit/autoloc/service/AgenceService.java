@@ -42,4 +42,10 @@ public class AgenceService implements IAgenceService {
     public List<Agence> addAgences(List<Agence> agences) {
         return (List<Agence>) agenceRepo.saveAll(agences);
     }
+
+    @Override
+    public List<Agence> getAgencesParVille(String ville) {
+        return agenceRepo.findByVille(ville);
+    }
+
 }

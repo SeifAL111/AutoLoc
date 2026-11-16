@@ -1,4 +1,4 @@
-package tn.esprit.autoloc.controllers;
+package tn.esprit.autoloc.web.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -52,4 +52,78 @@ public class VehiculeController {
     public void removeVehicule(@PathVariable("id-vehicule") Long idVehicule) {
         vehiculeService.removeVehicule(idVehicule);
     }
+
+
+
+    @Operation(summary = "Affecter un véhicule à une agence", description = "Rattache un véhicule neuf ou existant à une agence (ex: Sfax).")
+    @ApiResponse(responseCode = "200", description = "Véhicule affecté avec succès")
+    @PutMapping("/affecter-vehicule/{id-vehicule}/{id-agence}")
+    public Vehicule affecterVehicule(
+            @PathVariable("id-vehicule") Long idVehicule,
+            @PathVariable("id-agence") Long idAgence) {
+        return vehiculeService.affecterVehicule(idVehicule, idAgence);
+    }
+
+    @Operation(summary = "Affecter un équipement à un véhicule", description = "Installe un équipement (ex: siège bébé) sur un véhicule.")
+    @ApiResponse(responseCode = "200", description = "Équipement affecté au véhicule avec succès")
+    @PutMapping("/affecter-equipement/{id-vehicule}/{id-equipement}")
+    public Vehicule affecterEquipement(
+            @PathVariable("id-vehicule") Long idVehicule,
+            @PathVariable("id-equipement") Long idEquipement) {
+        return vehiculeService.affecterEquipement(idVehicule, idEquipement);
+    }
+
+    @Operation(summary = "Désaffecter un équipement d'un véhicule", description = "Retire un équipement d'un véhicule au retour.")
+    @ApiResponse(responseCode = "200", description = "Équipement retiré du véhicule avec succès")
+    @PutMapping("/desaffecter-equipement/{id-vehicule}/{id-equipement}")
+    public Vehicule desaffecterEquipement(
+            @PathVariable("id-vehicule") Long idVehicule,
+            @PathVariable("id-equipement") Long idEquipement) {
+        return vehiculeService.desaffecterEquipement(idVehicule, idEquipement);
+    }
+
+    @Operation(summary = "Rechercher des véhicules par marque", description = "Permet de filtrer la liste des véhicules selon leur marque.")
+    @ApiResponse(responseCode = "200", description = "Liste des véhicules récupérée avec succès")
+    @GetMapping("/search-marque/{marque}")
+    public List<Vehicule> getVehiculesParMarque(@PathVariable("marque") String marque) {
+        return vehiculeService.getVehiculesParMarque(marque);
+    }
+
+    @Operation(summary = "Rechercher des véhicules par catégorie", description = "Permet de filtrer la liste des véhicules selon leur catégorie (ex: SUV, Berline).")
+    @ApiResponse(responseCode = "200", description = "Liste des véhicules récupérée avec succès")
+    @GetMapping("/search-categorie/{categorie}")
+    public List<Vehicule> getVehiculesParCategorie(@PathVariable("categorie") String categorie) {
+        return vehiculeService.getVehiculesParCategorie(categorie);
+    }
+
+    @Operation(summary = "Rechercher des véhicules par statut", description = "Permet de filtrer la liste des véhicules selon leur statut (ex: DISPONIBLE).")
+    @ApiResponse(responseCode = "200", description = "Liste des véhicules récupérée avec succès")
+    @GetMapping("/search-statut/{statut}")
+    public List<Vehicule> getVehiculesParStatut(@PathVariable("statut") String statut) {
+        return vehiculeService.getVehiculesParStatut(statut);
+    }
+
+    @Operation(summary = "Rechercher des véhicules par marque partielle", description = "Permet de rechercher des véhicules dont la marque contient une chaîne de caractères.")
+    @ApiResponse(responseCode = "200", description = "Liste des véhicules récupérée avec succès")
+    @GetMapping("/search-marque-containing/{marque}")
+    public List<Vehicule> getVehiculesParMarqueContenant(@PathVariable("marque") String marque) {
+        return vehiculeService.getVehiculesParMarqueContenant(marque);
+    }
+
+    @Operation(summary = "Rechercher des véhicules par tarif supérieur", description = "Permet de filtrer les véhicules dont le tarif journalier est supérieur à une valeur donnée.")
+    @ApiResponse(responseCode = "200", description = "Liste des véhicules récupérée avec succès")
+    @GetMapping("/search-tarif-greater/{tarif}")
+    public List<Vehicule> getVehiculesTarifSuperieur(@PathVariable("tarif") double tarif) {
+        return vehiculeService.getVehiculesTarifSuperieur(tarif);
+    }
+
+    @Operation(summary = "Rechercher des véhicules par marque et statut", description = "Permet de filtrer les véhicules selon leur marque ET leur statut.")
+    @ApiResponse(responseCode = "200", description = "Liste des véhicules récupérée avec succès")
+    @GetMapping("/search-marque-statut")
+    public List<Vehicule> getVehiculesParMarqueAndStatut(
+            @RequestParam("marque") String marque,
+            @RequestParam("statut") String statut) {
+        return vehiculeService.getVehiculesParMarqueEtStatut(marque, statut);
+    }
+
 }

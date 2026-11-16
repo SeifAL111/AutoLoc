@@ -1,4 +1,4 @@
-package tn.esprit.autoloc.controllers;
+package tn.esprit.autoloc.web.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -58,5 +58,12 @@ public class AgenceController {
     @DeleteMapping("/remove-agence/{id-agence}")
     public void removeAgence(@PathVariable("id-agence") Long idAgence) {
         agenceService.removeAgence(idAgence);
+    }
+
+    @Operation(summary = "Rechercher des agences par ville", description = "Permet de filtrer la liste des agences selon leur ville (ex: Tunis).")
+    @ApiResponse(responseCode = "200", description = "Liste des agences récupérée avec succès")
+    @GetMapping("/search-ville/{ville}")
+    public List<Agence> getAgencesParVille(@PathVariable("ville") String ville) {
+        return agenceService.getAgencesParVille(ville);
     }
 }

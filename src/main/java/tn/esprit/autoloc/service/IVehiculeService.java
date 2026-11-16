@@ -10,4 +10,16 @@ public interface IVehiculeService {
     Vehicule retrieveVehicule(Long idVehicule);
     void removeVehicule(Long idVehicule);
     List<Vehicule> addVehicules(List<Vehicule> vehicules);
+
+    Vehicule affecterVehicule(Long idVehicule, Long idAgence);
+    Vehicule affecterEquipement(Long idVehicule, Long idEquipement);
+    Vehicule desaffecterEquipement(Long idVehicule, Long idEquipement);
+
+    List<Vehicule> getVehiculesParMarque(String marque);
+    List<Vehicule> getVehiculesParCategorie(String categorie);
+    List<Vehicule> getVehiculesParStatut(String statut);
+    List<Vehicule> getVehiculesParMarqueContenant(String marque);
+    List<Vehicule> getVehiculesTarifSuperieur(double tarif);
+    List<Vehicule> getVehiculesParMarqueEtStatut(String marque, String statut);
+
 }

@@ -12,6 +12,7 @@ public class Agence {
     private Long idAgence;
     private String nom;
     private String adresse;
+    private String ville;
 
     // Une agence possède plusieurs véhicules
     @OneToMany(mappedBy = "agence")
